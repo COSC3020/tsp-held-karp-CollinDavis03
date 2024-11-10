@@ -24,7 +24,7 @@ function tsp_hk(distance_matrix) {
         for (const nextCity of unvisitedCities) { 
             if (nextCity !== currentCity) {
                 const remainingCities = unvisitedCities.filter(city => city !== currentCity); 
-                const cost = FTS(remainingCities, nextCity) + distance_matrix[currentCity][nextCity]; 
+                const cost = FST(remainingCities, nextCity) + distance_matrix[currentCity][nextCity]; 
                 minCost = Math.min(minCost, cost);
             }
         }
@@ -42,7 +42,7 @@ function tsp_hk(distance_matrix) {
     let MTL = Infinity;
     for (let startCity = 0; startCity < numCities; startCity++) { 
         const allCities = Array.from({ length: numCities }, (_, i) => i); // All Cities
-        MTL = Math.min(MTL, FTS(allCities, startCity));
+        MTL = Math.min(MTL, FST(allCities, startCity));
     }
     
     return MTL;
