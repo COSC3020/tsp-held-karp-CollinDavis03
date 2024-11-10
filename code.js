@@ -1,16 +1,14 @@
 function tsp_hk(distance_matrix) {
     const numCities = distance_matrix.length; //num Cities = n
     
-    if (numCities <= 1) {
-        return 0; //Case for 0 or 1
-    }
+    if (numCities <= 1) return 0; //Case for 0 or 1
     
     const memo = new Map();
 
     //Helper function to find shortest distance with Help-Karp
     //FST = Find Shortest Tour
     function FST(unvisitedCities, currentCity) { 
-        const citiesKey = unvisitedCities.toString();
+        const citiesKey = '${unvisitedCities.toString()}-${currentCity}';
 
         //Check if sub has been solved
         if (memo.has(citiesKey)) {
