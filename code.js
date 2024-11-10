@@ -1,6 +1,10 @@
 function tsp_hk(distance_matrix) {
     const numCities = distance_matrix.length; //num Cities = n
-    if (numCities <= 1) return 0; //Cse for 0
+    
+    if (numCities <= 1) {
+        return 0; //Case for 0 or 1
+    }
+    
     const memo = new Map();
 
     //Helper function to find shortest distance with Help-Karp
@@ -16,7 +20,7 @@ function tsp_hk(distance_matrix) {
         //Base case: if only two cities return
         if (unvisitedCities.length === 2) { 
             const nextCity = unvisitedCities.find(city => city !== currentCity); 
-            return distance_martix[currentCity][nextCity]; 
+            return distance_matrix[currentCity][nextCity]; 
         } 
 
         let minCost = Infinity; 
