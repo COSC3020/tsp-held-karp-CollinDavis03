@@ -5,7 +5,7 @@ function tsp_hk(distance_matrix) {
     //Helper function to find shortest distance with Help-Karp
     //FST = Find Shortest Tour
     function FST(unvisitedCities, currentCity) { 
-        const citiesKey = unvisitedCities.String();
+        const citiesKey = unvisitedCities.toString();
 
         //Check if sub has been solved
         if (memo.has(citiesKey)) {
