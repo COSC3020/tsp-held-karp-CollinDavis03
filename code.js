@@ -14,19 +14,19 @@ function tsp_hk(distance_matrix) {
             return memo.get(citiesKey);
         }
 
-        //Base case: if only two cities return
-        if (unvisitedCities.length === 2) { 
-            const nextCity = unvisitedCities.find(city => city !== currentCity); 
-            return distance_matrix[currentCity][nextCity] + distance_matrix[nextCity][0]; 
+        //Base case: If all cities have been visited. return distance to last.
+        if (unvisitedCities === (1 << numCities) - 1) { 
+            return distance_matrix[currentCity][numCities - 1] || 0;  
         } 
 
         let minCost = Infinity; 
 
-        //Recursive case: find the minimum tour cost
-        for (const nextCity of unvisitedCities) { 
-            if (nextCity !== currentCity) {
-                const remainingCities = unvisitedCities.filter(city => city !== currentCity); 
-                const cost = FST(remainingCities, nextCity) + distance_matrix[currentCity][nextCity]; 
+        //Recursive case: explore next cities
+        for (let nextCity = 0; nextCity < numCities; nextCity++) { 
+            //If city hace not been visited
+            if (!(unvisitedCities & (1 << nextCity))) {
+                const remainingCities = unvisitedCities | (1 << nextCity); 
+                const cost = distance_matrix[currentCity][nextCity] + FST(remainingCities, nextCity); 
                 minCost = Math.min(minCost, cost);
             }
         }
@@ -36,13 +36,5 @@ function tsp_hk(distance_matrix) {
         return minCost; 
     }
 
-    // Initilize the memorization code
-    memo.clear(); 
-
-    // Find the shortest path starting from each City. 
-    //MTL = minimum Tour Length
-    const allCities = Array.from({ length: numCities }, (_,i) => i);
-    const MTL = FST(allCities, 0);
-    
-    return MTL;
+    return FST(1, 0); 
 }
