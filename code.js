@@ -36,5 +36,12 @@ function tsp_hk(distance_matrix) {
         return minCost; 
     }
 
+    //MTL = Minimum Tour Length
+    let MTL = Infinity; 
+    //Calculate the minimum tour length
+    for (let startCity = 0; startCity < numCities; startCity++) {
+        MTL = Math.min(MTL, FST(1 << startCity, startCity)); 
+    }
+
     return FST(1, 0); 
 }
