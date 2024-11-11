@@ -1,6 +1,5 @@
 function tsp_hk(distance_matrix) {
-    const numCities = distance_matrix.length; //num Cities = n
-    
+    const numCities = distance_matrix.length; //num Cities = n  
     if (numCities <= 1) return 0; //Case for 0 or 1
     
     const memo = new Map();
@@ -8,7 +7,7 @@ function tsp_hk(distance_matrix) {
     //Helper function to find shortest distance with Help-Karp
     //FST = Find Shortest Tour
     function FST(unvisitedCities, currentCity) { 
-        const citiesKey = '${unvisitedCities.toString()}-${currentCity}';
+        const citiesKey = `${unvisitedCities.toString()}-${currentCity}`;
 
         //Check if sub has been solved
         if (memo.has(citiesKey)) {
@@ -18,7 +17,7 @@ function tsp_hk(distance_matrix) {
         //Base case: if only two cities return
         if (unvisitedCities.length === 2) { 
             const nextCity = unvisitedCities.find(city => city !== currentCity); 
-            return distance_matrix[currentCity][nextCity]; 
+            return distance_matrix[currentCity][nextCity] + distance_matrix[nextCity][0]; 
         } 
 
         let minCost = Infinity; 
@@ -42,11 +41,8 @@ function tsp_hk(distance_matrix) {
 
     // Find the shortest path starting from each City. 
     //MTL = minimum Tour Length
-    let MTL = Infinity;
-    for (let startCity = 0; startCity < numCities; startCity++) { 
-        const allCities = Array.from({ length: numCities }, (_, i) => i); // All Cities
-        MTL = Math.min(MTL, FST(allCities, startCity));
-    }
+    const allCities = Array.from({ length: numCities }, (_,i) => i);
+    const MTL = FST(allCities, 0);
     
     return MTL;
 }
