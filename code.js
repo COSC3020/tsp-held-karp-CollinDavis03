@@ -43,5 +43,5 @@ function tsp_hk(distance_matrix) {
         MTL = Math.min(MTL, FST(1 << startCity, startCity)); 
     }
 
-    return FST(1, 0); 
+    return MTL; 
 }
