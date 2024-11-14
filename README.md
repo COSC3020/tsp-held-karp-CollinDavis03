@@ -49,6 +49,10 @@ reasoning, to this markdown file.
 
 ## Answer
 
+
+
 ## Sources 
-I looked at tlaceby repo after I wrote all my code because my return values were passing all the tests except for the 13-value one. I had return FST(1, 0) at the end of my code because I had messed up the MTL function and needed to change it up a bit before I finalized it. I had to change the names I was calling. I had unvisisted in there instead 
+I looked at tlaceby repo after I wrote all my code because my return values were passing all the tests except for the 13-value one. I had to return FST(1, 0) at the end of my code because I had messed up the MTL function and needed to change it a bit before I finalized it. I had to change the names I was calling. I had unvisistedCity in there instead of startCity. Once I changed that after looking at tlaceby repo and realized that I had the wrong variable in there, I changed the return value to MTL it passed the test. I did not borrow any code from this repo. I looked over the repo and studied how all the functions and variables interacted.  
+
 ## Plagarism Statement
+“I certify that I have listed all sources used to complete this exercise, including the use of any Large Language Models. All of the work is my own, except where stated otherwise. I am aware that plagiarism carries severe penalties and that if plagiarism is suspected, charges may be filed against me without prior notice.”
