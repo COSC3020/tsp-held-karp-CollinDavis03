@@ -50,5 +50,5 @@ reasoning, to this markdown file.
 ## Answer
 
 ## Sources 
-
+I looked at tlaceby repo after I wrote all my code because my return values were passing all the tests except for the 13-value one. I had return FST(1, 0) at the end of my code because I had messed up the MTL function and needed to change it up a bit before I finalized it. I had to change the names I was calling. I had unvisisted in there instead 
 ## Plagarism Statement
