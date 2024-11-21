@@ -48,30 +48,24 @@ is the worst-case asymptotic memory complexity? Add your answer, including your
 reasoning, to this markdown file.
 
 ## Answer
-```javascript
-//Recursive case: explore next cities
-        for (let nextCity = 0; nextCity < numCities; nextCity++) { 
-            //If city hace not been visited
-            if (!(unvisitedCities & (1 << nextCity))) {
-                const remainingCities = unvisitedCities | (1 << nextCity); 
-                const cost = distance_matrix[currentCity][nextCity] + FST(remainingCities, nextCity); 
-                minCost = Math.min(minCost, cost);
-            }
-        }
-```
-With this piece of code. Looking at the “const cost = distance_matrix[currentCity][nextCity] + FST(remainingCities, nextCity);”. We are using a recursive method to look through the subsets of the unvisited cities and loop through them to mark them as visited in the cost. With our memoization in this, it will come out to be $2^{n}$ as the worst-case for this. 
+Looking back at my code. Using this piece of code for the explanation. 
 
 ```javascript
-//MTL = Minimum Tour Length
-    let MTL = Infinity; 
-    //Calculate the minimum tour length
-    for (let startCity = 0; startCity < numCities; startCity++) {
-        MTL = Math.min(MTL, FST(1 << startCity, startCity)); 
+for (let nextCity = 0; nextCity < numCities; nextCity++) { 
+    if (!(unvisitedCities & (1 << nextCity))) {
+        const remainingCities = unvisitedCities | (1 << nextCity); 
+        const cost = distance_matrix[currentCity][nextCity] + FST(remainingCities, nextCity); 
+        minCost = Math.min(minCost, cost);
     }
+}
 ```
-Within this piece of code. After we visit each unvisited city it will go through it in $n$ permutations and store them so we can come back to it in the end.
 
-With that, we are trying to find the shortest distance within each graph and get the shortest distance possible. This is generated based on the $n$ permutations we have. Which we know the Held-Karp function will generate $\Theta(n * 2^{n})$ as the worst-case, but if Held-Karp runs through each city n times then the overall worst-case scenario would be $\Theta(n^{2} * 2^{n})$. 
+We have the state representation. Which are the unvisitedCities and the currentCity. With the unvisitedCities, you will get $2^{n}$ possible subsets where n will represent the number of cities. Then you will have subsets of the cities which will give you n for the possible cities from currentCity. Number of States will be ($2^{n}$ * n) 
+
+With the recursive call, the nextCity will give up to n values. The reason is because it is from the state iterating over the nextCity. 
+
+Combining the two will give you $O(2^{n} * n * n)$. This will reduce down too $O(2^{n} * n^{2})$ as the worst-case runtime.
+
 
 ## Sources 
 I looked at tlaceby repo after I wrote all my code because my return values were passing all the tests except for the 13-value one. I had to return FST(1, 0) at the end of my code because I had messed up the MTL function and needed to change it a bit before I finalized it. I had to change the names I was calling. I had unvisistedCity in there instead of startCity. Once I changed that after looking at tlaceby repo and realized that I had the wrong variable in there, I changed the return value to MTL it passed the test. I did not borrow any code from this repo. I looked over the repo and studied how all the functions and variables interacted.  
