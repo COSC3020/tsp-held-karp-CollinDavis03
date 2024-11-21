@@ -5,33 +5,38 @@ function tsp_hk(distance_matrix) {
     const memo = new Map();
 
     //Helper function to find shortest distance with Help-Karp
-    //FST = Find Shortest Tour
+    //FST = Find Shortest Tour  
+    //'unvisitedCities' is used as a bitmask where it shows if it is visited (1) or not visited (0)
+    //currentCity is the current city that is being processed
     function FST(unvisitedCities, currentCity) { 
-        const citiesKey = `${unvisitedCities}-${currentCity}`;
+        const citiesKey = `${unvisitedCities}-${currentCity}`; // Key to store the subset result 
 
-        //Check if sub has been solved
+        //Check if subset has been solved
         if (memo.has(citiesKey)) {
             return memo.get(citiesKey);
         }
 
         //Base case: If all cities have been visited. return distance to last.
+        //'unvisitedCities === (1 << numCities) - 1' means all bits are set (all cities have been visited) 
         if (unvisitedCities === (1 << numCities) - 1) { 
-            return distance_matrix[currentCity][numCities - 1] || 0;  
+            return distance_matrix[currentCity][numCities - 1] || 0; // return 0 if no connection exists
         } 
 
         let minCost = Infinity; 
 
         //Recursive case: explore next cities
         for (let nextCity = 0; nextCity < numCities; nextCity++) { 
-            //If city hace not been visited
+            //If city has not been visited
             if (!(unvisitedCities & (1 << nextCity))) {
+                //Add 'nextCity' to the visited set by setting it with a corresponding bit. 
                 const remainingCities = unvisitedCities | (1 << nextCity); 
+                //Will calculate the cost of the visiting 'nextCity' and continue the search 
                 const cost = distance_matrix[currentCity][nextCity] + FST(remainingCities, nextCity); 
                 minCost = Math.min(minCost, cost);
             }
         }
 
-        //Store the result
+        //Store the result in the memoization table. 
         memo.set(citiesKey, minCost);
         return minCost; 
     }
@@ -40,6 +45,7 @@ function tsp_hk(distance_matrix) {
     let MTL = Infinity; 
     //Calculate the minimum tour length
     for (let startCity = 0; startCity < numCities; startCity++) {
+        //Start with only 'startCity' visited (bitmask '1 << startCity') 
         MTL = Math.min(MTL, FST(1 << startCity, startCity)); 
     }
 
