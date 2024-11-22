@@ -52,8 +52,8 @@ Looking back at my code. Using this piece of code for the explanation.
 
 ```javascript
 for (let nextCity = 0; nextCity < numCities; nextCity++) { 
-    if (!(unvisitedCities & (1 << nextCity))) {
-        const remainingCities = unvisitedCities | (1 << nextCity); 
+    if (!(visitedCities & (1 << nextCity))) {
+        const remainingCities = visitedCities | (1 << nextCity); 
         const cost = distance_matrix[currentCity][nextCity] + FST(remainingCities, nextCity); 
         minCost = Math.min(minCost, cost);
     }
